@@ -1,140 +1,109 @@
 <?php
- class DonHangController
- {
-    // kết nổi đến file model
-    public $modelDonHang;
-      
-    public function __construct() {
-       $this->modelDonHang = new DonHang();  // khởi tạo đối tượng modelDonHang để sử dụng trong các hàm khác
-    }
-    // hàm hiển thị danh sách
-    public function index(){
-      // lấy ra dữ liệu danh mục
-       $donhangs = $this->modelDonHang->getAll();
-      //  var_dump($danhMucs);
+class DonHangController
+{
 
+   public $modelDonHang;
+
+
+   public function __construct()
+   {
+      $this->modelDonHang = new DonHang();
+   }
+   // hàm hiển thị danh sách
+   public function index()
+   {
+      $donhangs = $this->modelDonHang->getAll();
       // đưa dữ liệu ra view
       require_once './views/donhang/listdonHang.php';
-    }
-    // hàm hiển thị thêm
-    public function create(){
-      require_once './views/donhang/createdonHang.php';
-    }
-    // hàm thêm vào csdl
-    public function store(){
+   }
+
+   public function detailDonhang()
+   {
+      $don_hang_id = $_GET['id_don_hang'];
+      $donHang = $this->modelDonHang->getDetailDonHang($don_hang_id);
+      $sanPhamDonHang = $this->modelDonHang->getlistSpDonHang($don_hang_id);
+      // var_dump($sanPhamDonHang);die;
+      $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();
+      // var_dump($listTrangThaiDonHang);die;
+      require_once './views/donhang/detailDonHang.php';
+   }
+
+
+   public function editDonHang()
+   {
+      $id = $_GET['id_don_hang'];
+      $donHang = $this->modelDonHang->getDetailDonHang($id);
+      $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();
+      if ($donHang) {
+         require_once './views/donhang/editdonHang.php';
+      } else {
+         header("Location:" . BASE_URL_ADMIN . '?act=don-hangs');
+      }
+   }
+
+   public function postEditDonHang()
+   {
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // lấy ra dữ liệu
-        $ma_don_hang = $_POST['ma_don_hang'];
-        $ngay_dat = $_POST['ngay_dat'];
-        $trang_thai_don_hang = $_POST['trang_thai_don_hang'];
-        $hinh_thuc_thanh_toan = $_POST['hinh_thuc_thanh_toan'];
-        $trang_thai_thanh_toan = $_POST['trang_thai_thanh_toan'];
-      //  validate
 
-      $errors = [];
-      if (empty ($ma_don_hang)) {
-        $errors['ma_don_hang'] = 'Mã không được để trống';
-      }
+         $don_hang_id = $_POST['don_hang_id'] ?? '';
 
-      if (empty($ngay_dat)) {
-        $errors['ngay_dat'] = 'ngày đặt không được để trống';
-      }
-      if (empty($trang_thai_don_hang)) {
-        $errors['trang_thai_don_hang'] = 'Trạng thái không được để trống';
-      }
-      if (empty($hinh_thuc_thanh_toan)) {
-        $errors['hinh_thuc_thanh_toan'] = 'lựa chọn hình thức thanh toán';
-      }
-      if (empty($trang_thai_thanh_toan)) {
-        $errors['trang_thai_thanh_toan'] = 'Trạng thái không được để trống';
-      }
-      //thêm dữ liệu
+         $ten_nguoi_nhan = $_POST['ten_nguoi_nhan'] ?? '';
+         $sdt_nguoi_nhan = $_POST['sdt_nguoi_nhan'] ?? '';
+         $email_nguoi_nhan = $_POST['email-nguoi-nhan'] ?? '';
+         $dia_chi_nguoi_nhan = $_POST['dia_chi_nguoi_nhan'] ?? '';
+         $ghi_chu = $_POST['ghi_chu'] ?? '';
+         $trang_thai_id = $_POST['trang_thai_id'] ?? '';
 
-      if (empty($errors)) {
-        // nếu không có lỗi thì thêm dữ liệu
-        // thêm vào csdl
-        $this->modelDonHang->postData($ma_don_hang,$ngay_dat,$trang_thai_don_hang,$hinh_thuc_thanh_toan,$trang_thai_thanh_toan);
-        unset($_SESSION['errors']);
-        header('Location: index.php?act=don-hangs');
-        exit();
-      }
-      else {
-        $_SESSION['errors'] = $errors;
-        header('Location: index.php?act=form-them-don-hang');
-        exit();
-      }
-      }
-    }
-    // hàm hiển thị sửa
-    public function edit(){
-      //lấy id 
-      $id = $_GET['DonHang_id'];
+         $erros = [];
+         if (empty($ten_nguoi_nhan)) {
+            $erros['ten_nguoi_nhan'] = 'Tên người nhận không được để trống';
+         }
+         if (empty($sdt_nguoi_nhan)) {
+            $erros['sdt_nguoi_nhan'] = 'Số điện thoại người nhận không được để trống';
+         }
+         if (empty($email_nguoi_nhan)) {
+            $erros['email_nguoi_nhan'] = 'Email người nhận không được để trống';
+         }
+         if (empty($dia_chi_nguoi_nhan)) {
+            $erros['dia_chi_nguoi_nhan'] = 'Địa chỉ người nhận không được để trống';
+         }
 
-      // lấy thông tin chi tiết của danh mục
-      $donhangs = $this->modelDonHang->getDetaildata($id);
+         if (empty($trang_thai_id)) {
+            $erros['trang_thai_id'] = 'Trạng thái đơn hàng';
+         }
+         $_SESSION['error'] = $erros;
 
-      //đổ dữ liệu ra form
-      require_once './views/donhang/editdonHang.php';
-    }
-    // hàm cập nhật dữ liệu vào csdl
-    public function update(){
-      if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // lấy ra dữ liệu
-        $id = $_POST['id'];
-        $ma_don_hang = $_POST['ma_don_hang'];
-        $ngay_dat = $_POST['ngay_dat'];
-        $trang_thai_don_hang = $_POST['trang_thai_don_hang'];
-        $hinh_thuc_thanh_toan = $_POST['hinh_thuc_thanh_toan'];
-        $trang_thai_thanh_toan = $_POST['trang_thai_thanh_toan'];
+         if (empty($erros)) {
+            // require_once './admin/controllers/DonHangController.php';
+            $this->modelDonHang->updateDonHang(
+               $don_hang_id,
+               $ten_nguoi_nhan,
+               $sdt_nguoi_nhan,
+               $email_nguoi_nhan,
+               $dia_chi_nguoi_nhan,
+               $ghi_chu,
+               $trang_thai_id
+            );
 
-      //  validate
-
-      $errors = [];
-      if (empty ($ma_don_hang)) {
-        $errors['ma_don_hang'] = 'Tên danh mục không được để trống';
+            header("location:" . BASE_URL_ADMIN . '?act=don-hangs');
+            exit();
+         } else {
+            $_SESSION['flash'] = true;
+            header("location:" . BASE_URL_ADMIN . '?act=form-sua-don-hang&id_don_hang=' . $don_hang_id);
+         }
       }
-
-      if (empty($ngay_dat)) {
-        $errors['ngay_dat'] = 'ngày đặt không được để trống';
-      }
-      if (empty($trang_thai_don_hang)) {
-        $errors['trang_thai_don_hang'] = 'Trạng thái không được để trống';
-      }
-      if (empty($hinh_thuc_thanh_toan)) {
-        $errors['hinh_thuc_thanh_toan'] = 'lựa chọn hình thức thanh toán';
-      }
-      if (empty($trang_thai_thanh_toan)) {
-        $errors['trang_thai_thanh_toan'] = 'Trạng thái không được để trống';
-      }
-      //thêm dữ liệu
-
-      if (empty($errors)) {
-        // nếu không có lỗi thì thêm dữ liệu
-        // thêm vào csdl
-        $this->modelDonHang->updateData($id,$ma_don_hang,$ngay_dat,$trang_thai_don_hang,$hinh_thuc_thanh_toan,$trang_thai_thanh_toan);
-        unset($_SESSION['errors']);
-        header('Location: index.php?act=don-hangs');
-        exit();
-      }
-      else {
-        $_SESSION['errors'] = $errors;
-        header('Location: index.php?act=form-sua-don-hang');
-        exit();
-      }
-      }
-    }
-      // hàm xóa dữ liệu trong csdl
-      public function destroy(){
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-          $id = $_POST['DonHang_id'];
-
-          //xóa danh mục
-          $this->modelDonHang->deleteData($id);
-          header('Location: index.php?act=don-hangs');
-          exit();
-      }
-    }
- }
+   }
 
 
-?>
+
+
+
+
+
+
+
+
+
+
+   
+}

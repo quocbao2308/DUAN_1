@@ -76,12 +76,12 @@ match ($act) {
      //      'sua-tin-tuc'            => (new tintucController())->update(),
      //      'xoa-tin-tuc'            => (new tintucController())->destroy(),
      ///Quản lý trạng thái
-    'trang-thai'           => (new TrangThaiController())->index(),
-    'form-add-trang-thai'  => (new TrangThaiController())->create(),
-    'them-trang-thai'      => (new TrangThaiController())->store(),
-    'form-update-trang-thai'      => (new TrangThaiController())->edit(),
-    'sua-trang-thai'       => (new TrangThaiController())->update(),
-    'xoa-trang-thai'       => (new TrangThaiController())->destroy(),
+     'trang-thai'           => (new TrangThaiController())->index(),
+     'form-add-trang-thai'  => (new TrangThaiController())->create(),
+     'them-trang-thai'      => (new TrangThaiController())->store(),
+     'form-update-trang-thai'      => (new TrangThaiController())->edit(),
+     'sua-trang-thai'       => (new TrangThaiController())->update(),
+     'xoa-trang-thai'       => (new TrangThaiController())->destroy(),
      //quản lý sản phẩm
      'san-phams'           => (new sanphamController())->index(),
      'form-them-san-pham'  => (new sanphamController())->create(),
@@ -97,11 +97,9 @@ match ($act) {
      //     'sua-khuyen-mai'            => (new KhuyenMaiController())->update(),
      //     'xoa-khuyen-mai'            => (new KhuyenMaiController())->destroy(),
      //     //     //quản lý đơn hàng
-     //        'don-hangs'           => (new DonHangController())->index(),
-     //         'form-them-don-hang'  => (new DonHangController())->create(),
-     //         'them-don-hang'       => (new DonHangController())->store(),
-     //         'form-sua-don-hang'   => (new DonHangController())->edit(),
-     //         'sua-don-hang'        => (new DonHangController())->update(),
-     //         'xoa-don-hang'        => (new DonHangController())->destroy(),
-
+     //        
+     'don-hangs'           => (new DonHangController())->index(),
+     'form-sua-don-hang'   => (new DonHangController())->editDonHang(),
+     'sua-don-hang'        => (new DonHangController())->postEditDonHang(),
+     'chi-tiet-don-hang' => (new DonHangController())->detailDonhang(),
 };
