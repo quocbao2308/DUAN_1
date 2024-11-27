@@ -134,7 +134,7 @@
 
                                                     <div class="col-lg-12">
                                                         <div class="text-end">
-                                                            <a href="<?= BASE_URL_ADMIN.'?act=sua-don-hang' ?>"><button type="submit" class="btn btn-primary">Submit</button></a>
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
                                                         </div>
                                                     </div>
 

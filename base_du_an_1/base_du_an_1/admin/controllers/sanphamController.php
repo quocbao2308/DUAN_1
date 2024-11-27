@@ -48,6 +48,13 @@ class SanPhamController
             $trang_thai = $_POST['trang_thai'];
 
             // Xử lý upload ảnh
+            try {
+                $file_thumb = $this->uploadFile($_FILES['hinh_anh'], './uploads/avatars/');
+            } catch (Exception $e) {
+                // Ghi log lỗi hoặc hiển thị lỗi
+                echo "Lỗi upload ảnh: " . $e->getMessage();
+                exit();
+            }
             
             // $file_thumb = uploadFile($hinh_anh, './uploads/avatars/');
 

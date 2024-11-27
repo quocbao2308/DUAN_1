@@ -14,6 +14,8 @@ class DonHangController
    {
       $donhangs = $this->modelDonHang->getAll();
       // đưa dữ liệu ra view
+      // echo"<pre>";
+      // print_r($donhangs);die;
       require_once './views/donhang/listdonHang.php';
    }
 
@@ -24,7 +26,7 @@ class DonHangController
       $sanPhamDonHang = $this->modelDonHang->getlistSpDonHang($don_hang_id);
       // var_dump($sanPhamDonHang);die;
       $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();
-      // var_dump($listTrangThaiDonHang);die;
+      
       require_once './views/donhang/detailDonHang.php';
    }
 
@@ -42,14 +44,15 @@ class DonHangController
    }
 
    public function postEditDonHang()
+   
    {
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
+         // var_dump($_POST['trang_thai_id']);die();
          $don_hang_id = $_POST['don_hang_id'] ?? '';
 
          $ten_nguoi_nhan = $_POST['ten_nguoi_nhan'] ?? '';
          $sdt_nguoi_nhan = $_POST['sdt_nguoi_nhan'] ?? '';
-         $email_nguoi_nhan = $_POST['email-nguoi-nhan'] ?? '';
+         $email_nguoi_nhan = $_POST['email_nguoi_nhan'] ?? '';
          $dia_chi_nguoi_nhan = $_POST['dia_chi_nguoi_nhan'] ?? '';
          $ghi_chu = $_POST['ghi_chu'] ?? '';
          $trang_thai_id = $_POST['trang_thai_id'] ?? '';
@@ -68,11 +71,9 @@ class DonHangController
             $erros['dia_chi_nguoi_nhan'] = 'Địa chỉ người nhận không được để trống';
          }
 
-         if (empty($trang_thai_id)) {
-            $erros['trang_thai_id'] = 'Trạng thái đơn hàng';
-         }
+         // var_dump($erros);die;
          $_SESSION['error'] = $erros;
-
+        
          if (empty($erros)) {
             // require_once './admin/controllers/DonHangController.php';
             $this->modelDonHang->updateDonHang(

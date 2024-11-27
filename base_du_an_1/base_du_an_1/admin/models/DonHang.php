@@ -14,10 +14,11 @@ class DonHang
    public function getAll()
    {
       try {
-         // $sql = 'SELECT * FROM don_hangs.*, trang_thai_don_hangs.trang_thai FROM don_hangs
-         // INNER JOIN trang_thai_don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id ';
+         $sql = 'SELECT  don_hangs.*, trang_thai_don_hangs.trang_thai FROM don_hangs
+         INNER JOIN trang_thai_don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id 
+        ';
          
-         $sql = 'SELECT * FROM don_hangs ';
+         // $sql = 'SELECT * FROM don_hangs.*, ';
 
          $stmt = $this->conn->prepare($sql);
 
