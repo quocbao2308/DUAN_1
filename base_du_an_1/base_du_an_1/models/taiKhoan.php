@@ -14,11 +14,10 @@ class TaiKhoan
     {
 
         try {
-            $sql = 'SELECT * FROM tai_khoans WHERE email =:email';
+            $sql = 'SELECT * FROM nguoi_dungs WHERE email = :email';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['email' => $email]);
             $user = $stmt->fetch();
-
             if ($user && password_verify($mat_khau, $user['mat_khau'])) {
                 if ($user['chuc_vu_id'] == 2) {
                     if ($user['trang_thai'] == 1) {
@@ -30,7 +29,7 @@ class TaiKhoan
                     return "Tài khoản không có quyền đăng nhập";
                 }
             } else{
-                return "bạn nhập sai thông tin mạt khẩu hoặc tài khoản";
+                return "bạn nhập sai thông tin mật khẩu hoặc tài khoản";
             }
         } catch (\Exception $e) {
             echo "lỗi" .$e->getMessage();

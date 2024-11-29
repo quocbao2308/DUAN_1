@@ -39,7 +39,7 @@
                             <?php } ?>
                             <form action="<?= BASE_URL . '?act=check-login'  ?>" method="post">
                                 <div class="single-input-item">
-                                    <input type="email" placeholder="Email or Username" name="email" required />
+                                    <input type="email" placeholder="Email " name="email" required />
                                 </div>
                                 <div class="single-input-item">
                                     <input type="password" placeholder="Enter your Password" name="password" required />
@@ -51,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="single-input-item">
-                                    <button class="btn btn-sqr">Đăng nhâp</button>
+                                    <button class="btn btn-sqr">Đăng nhập</button>
                                 </div>
                             </form>
                         </div>

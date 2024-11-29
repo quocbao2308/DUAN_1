@@ -26,14 +26,18 @@
                                 <!-- main menu navbar start -->
                                 <nav class="desktop-menu">
                                     <ul>
-                                        <li><a href="<? BASE_URL ?>">Trang chủ</a>
+                                        <li><a href="<?= BASE_URL ?>">Trang chủ</a>
 
                                         </li>
 
                                         <li><a href="blog-left-sidebar.html">Sản Phẩm <i
                                                     class="fa fa-angle-down"></i></a>
                                             <ul class="dropdown">
-                                                <li><a href="blog-left-sidebar.html">blog left sidebar</a></li>
+                                                <?php
+                                                $listDanhMuc = ListDM();
+                                                foreach($listDanhMuc as $Dm):   ?>
+                                                 <li><a href="?act=dm&id=<?= $Dm['id'] ?>"><?= $Dm['ten_danh_muc'] ?></a></li>
+                                                <?php endforeach  ?>
                                                 
                                             </ul>
                                         </li>

@@ -1,6 +1,7 @@
 <?php require_once 'layout/header.php';  ?>
 <?php require_once 'layout/menu.php';  ?>
 
+
 <main>
     <!-- breadcrumb area start -->
     <div class="breadcrumb-area">
@@ -21,7 +22,7 @@
         </div>
     </div>
     <!-- breadcrumb area end -->
-
+   
     <!-- page main wrapper start -->
     <div class="shop-main-wrapper section-padding pb-0">
         <div class="container">
@@ -40,6 +41,8 @@
                                     <?php endforeach ?>
                                 </div>
                                 <img src="<?= $sanPham['hinh_anh'] ?>" alt="">
+                                <img src="admin/uploads/avatars/674831d868155-giaythethao3.webp" alt="">
+                                
                             </div>
                             <div class="col-lg-7">
                                 <div class="product-details-des">
@@ -205,7 +208,7 @@
                                     </div>
 
                                     <div class="cart-hover">
-                                        <button class="btn btn-cart">Chi Tiết Sản Phẩm</button>
+                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .$sanPham['id'];?>"><button class="btn btn-cart">Chi Tiết Sản Phẩm</button></a>
                                     </div>
                                 </figure>
                                 <div class="product-caption text-center">

@@ -41,6 +41,7 @@ class SanPham
             $stmt->bindParam(':ngay_nhap', $ngay_nhap);
             $stmt->bindParam(':mo_ta', $mo_ta);
             $stmt->bindParam(':danh_muc_id', $danh_muc_id);
+            // var_dump($danh_muc_id);die;
             $stmt->bindParam(':trang_thai', $trang_thai);
             $stmt->execute();
             return true;

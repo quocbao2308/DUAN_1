@@ -104,40 +104,48 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarTrangThai" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarTrangThai">
                         <i class="bi bi-gear"></i> <span data-key="t-advance-ui">Quản lý trạng thái đơn hàng</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarTrangThai">
-                        <ul class="nav nav-sm flex-column">
+                        <ul class="nav nav-sm flex-column"> -->
                             <li class="nav-item">
                                 <a href="?act=trang-thai" class="nav-link" data-key="t-sweet-alerts">
                                     Xem trạng thái
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <a href="?act=form-add-trang-thai" class="nav-link" data-key="t-nestable-list">
                                     Tạo Trang Thai
                                 </a>
-                            </li>
+                            </li> -->
 
-
+<!-- 
                         </ul>
                     </div>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDonHang" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDonHang">
                         <i class="las la-shopping-cart"></i><span data-key="t-advance-ui">Quản lý đơn hàng</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarDonHang">
-                        <ul class="nav nav-sm flex-column">
+                        <ul class="nav nav-sm flex-column"> -->
                             <li class="nav-item">
                                 <a href="?act=don-hangs" class="nav-link" data-key="t-sweet-alerts">
                                     Danh sách
                                 </a>
                             </li>
-                        </ul>
+                        <!-- </ul>
                     </div>
+                </li> -->
+                <li class="nav-item">
+             
+             
+                                <a href="?act=users" class="nav-link" data-key="t-sweet-alerts">
+                                    Danh sách người dùng
+                                </a>
+
                 </li>
 
                 <!-- <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Bán hàng</span></li> -->

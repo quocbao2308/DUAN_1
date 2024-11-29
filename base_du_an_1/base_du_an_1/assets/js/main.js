@@ -1,3 +1,4 @@
+
 (function ($) {
 	"use strict";
 
@@ -25,6 +26,8 @@
 	bgSelector.each(function (index, elem) {
 		var element = $(elem),
 			bgSource = element.data('bg');
+			console.log(bgSource);
+			
 		element.css('background-image', 'url(' + bgSource + ')');
 	});
 

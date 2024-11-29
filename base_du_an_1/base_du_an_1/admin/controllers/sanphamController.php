@@ -14,6 +14,8 @@ class SanPhamController
     public function index()
     {
         $sanphams = $this->modelSanPham->getAll();
+        // var_dump($sanphams); die;
+
         require_once './views/sanpham/listsanpham.php';
     }
 
@@ -24,7 +26,7 @@ class SanPhamController
         $danhMucModel = new DanhMuc(); // Tạo đối tượng Model
         $listDanhMuc = $danhMucModel->getAll(); // Lấy danh sách danh mục
         $listDanhMuc = $this->modelDanhMuc->getAll();
-        echo (3);
+        // echo (3);
 
         require_once './views/sanpham/createsanpham.php';
     }
@@ -40,8 +42,10 @@ class SanPhamController
             $gia_khuyen_mai = $_POST['gia_khuyen_mai'];
             $hinh_anh = $_FILES['hinh_anh'];
             $so_luong = $_POST['so_luong'];
-            $luot_xem = $_POST['luot_xem'] ?? 0; // Mặc định lượt xem là 0 nếu không có
+            $luot_xem = $_POST['luot_xem'] ?? 0; 
+            // Mặc định lượt xem là 0 nếu không có
             $danh_muc_id = $_POST['danh_muc_id'];
+            // var_dump($danh_muc_id);
             $ngay_nhap = $_POST['ngay_nhap'];
             $mo_ta = $_POST['mo_ta'];
 
@@ -49,14 +53,13 @@ class SanPhamController
 
             // Xử lý upload ảnh
             try {
-                $file_thumb = $this->uploadFile($_FILES['hinh_anh'], './uploads/avatars/');
+                $file_thumb = $this->uploadFile($_FILES['hinh_anh'], '../admin/uploads/avatars/');
             } catch (Exception $e) {
                 // Ghi log lỗi hoặc hiển thị lỗi
                 echo "Lỗi upload ảnh: " . $e->getMessage();
                 exit();
             }
-            
-            // $file_thumb = uploadFile($hinh_anh, './uploads/avatars/');
+     $newPath = str_replace("../", "", $file_thumb);
 
             // Kiểm tra lỗi
             $errors = [];
@@ -66,7 +69,7 @@ class SanPhamController
             if (empty($ngay_nhap)) $errors['ngay_nhap'] = 'Ngày nhập sản phẩm không được để trống';
 
             if (empty($errors)) {
-                $this->modelSanPham->postData($ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $hinh_anh, $so_luong, $luot_xem, $ngay_nhap, $mo_ta, $danh_muc_id, $trang_thai);
+                $this->modelSanPham->postData($ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $newPath, $so_luong, $luot_xem, $ngay_nhap, $mo_ta, $danh_muc_id, $trang_thai);
                 header('Location: index.php?act=san-phams');
                 exit();
             } else {
@@ -95,20 +98,30 @@ class SanPhamController
             $gia_san_pham = $_POST['gia_san_pham'];
             $gia_khuyen_mai = $_POST['gia_khuyen_mai'];
             // $hinh_anh = $_FILES['hinh_anh'];
-            $so_luong = $_POST['so_luong'];
+            $so_luong = $_POST['so_luong'] ?? '';
             $luot_xem = $_POST['luot_xem'] ?? 0;
             $danh_muc_id = $_POST['danh_muc_id'];
             $ngay_nhap = $_POST['ngay_nhap'];
             $mo_ta = $_POST['mo_ta'];
             $trang_thai = $_POST['trang_thai'];
 
-            // $hinh_anh = $_FILES['hinh_anh'];
-            // $file_thumb = uploadFile($hinh_anh, './uploads/avatars/');
-            // //Lưu hình ảnh
-            // $file_thumb = uploadFile($hinh_anh, './uploads/');
+            // Xử lý upload ảnh
+            try {
+                if ($_FILES['hinh_anh']['error'] === UPLOAD_ERR_OK) {
+                    // Chỉ truyền phần tử file vào hàm uploadFile
+                    $file_thumb = $this->uploadFile($_FILES['hinh_anh'], './uploads/avatars/');
+                } else {
+                    // Xử lý trường hợp file không được upload
+                    $file_thumb = null; // Hoặc giữ giá trị cũ nếu không cần thay đổi ảnh
+                }   
+
+            } catch (Exception $e) {
+                echo "Lỗi upload ảnh: " . $e->getMessage();
+                exit();
+            }
 
 
-            //mảng hình ảnh
+            // mảng hình ảnh
             // $img_array = $_FILES['img_array'];
 
             // Kiểm tra lỗi
@@ -119,8 +132,20 @@ class SanPhamController
             if (empty($ngay_nhap)) $errors['ngay_nhap'] = 'Ngày nhập sản phẩm không được để trống';
 
             if (empty($errors)) {
-                // $this->modelSanPham->updateData($id, $ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $file_thumb, $so_luong, $luot_xem, $ngay_nhap, $mo_ta, $danh_muc_id, $trang_thai);
-                $this->modelSanPham->updateData($id, $ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $so_luong, $luot_xem, $ngay_nhap, $mo_ta, $danh_muc_id, $trang_thai);
+                $this->modelSanPham->updateData(
+                    $id,
+                    $ten_san_pham,
+                    $gia_san_pham,
+                    $gia_khuyen_mai,
+                    $so_luong,
+                    $danh_muc_id,
+                    $ngay_nhap,
+                    $mo_ta,
+                    $trang_thai,
+                    $file_thumb,
+                );
+                var_dump($_SERVER);
+                // die;
                 unset($_SESSION['errors']);
                 header('Location: index.php?act=san-phams');
                 exit();
@@ -131,6 +156,7 @@ class SanPhamController
             }
         }
     }
+
 
     // Xóa sản phẩm
     public function destroy()
@@ -151,13 +177,13 @@ class SanPhamController
         }
 
         // Validate file type (e.g., only images are allowed)
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif','image/jpg','image/webp'];
         if (!in_array($file['type'], $allowedTypes)) {
             throw new Exception("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
         }
 
         // Validate file size (e.g., max 2MB)
-        $maxFileSize = 2 * 1024 * 1024; // 2MB
+        $maxFileSize = 6 * 1024 * 1024; // 2MB
         if ($file['size'] > $maxFileSize) {
             throw new Exception("File size exceeds the maximum limit of 2MB.");
         }

@@ -25,3 +25,21 @@ function connectDB()
 function formatPrice($price){
     return number_format($price, 0,'.','.');
 }
+function ListDM(){
+    $listDanhMuc = (new DanhMuc)->getAll(); 
+    return $listDanhMuc;
+}
+function deleteSessionError() {
+    // Ensure session is started
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    // Check if the flash message is set and then unset it
+    if (isset($_SESSION['flash'])) {
+        unset($_SESSION['flash']);
+        session_unset();
+    }
+
+
+}

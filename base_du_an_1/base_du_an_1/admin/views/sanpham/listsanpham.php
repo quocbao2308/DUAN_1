@@ -67,9 +67,11 @@
                                                                 <td class="fw-medium"><?= $index + 1 ?></td>
                                                                 <td><?= htmlspecialchars($sanpham['ten_san_pham']) ?></td>
                                                                 <td>
-                                                                    <img src="<?= htmlspecialchars($sanpham['hinh_anh']) ?>"
-                                                                        style="width: 100px;" alt="Hình ảnh sản phẩm"
-                                                                        onerror="this.onerror=null;this.src='https://png.pngtree.com/png-clipart/20220509/original/pngtree-sneakers-cartoon-design-png-image_7674282.png'">
+                                                                   <?php  $newPath = str_replace("admin", ".", $sanpham['hinh_anh']);   ?>
+                                                                 
+                                                                    <img src="<?= htmlspecialchars($newPath) ?>"
+                                                                        style="width: 100px;" alt="Hình ảnh sản phẩm">
+                                                                       
                                                                 </td>
                                                                 <td><?= number_format($sanpham['gia_san_pham']) ?> VNĐ</td>
                                                                 <td><?= $sanpham['so_luong'] ?></td>

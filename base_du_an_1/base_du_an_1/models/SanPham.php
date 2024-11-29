@@ -37,6 +37,18 @@ class SanPham
         }
     }
 
+    public function getAllSanPhamByDanhMuc($id){
+        try {
+            $sql = 'SELECT * FROM san_phams where danh_muc_id = :id';
+            $stmt = $this->conn->prepare($sql);
+            // $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+            $stmt->execute([':id' => $id]);
+            return $stmt->fetchAll();
+        } catch (Exception $e) {
+            echo "lỗi" . $e->getMessage();
+        }
+    }
+
     public function getListAnhSanPham($id)
     {
         try {
@@ -52,8 +64,8 @@ class SanPham
     public function getBinhLuanFromSanPham($id)
     {
         try {
-            $sql = 'SELECT bl.* , tai_khoans.ten,tai_khoans.hinh_anh  FROM binh_luans as bl
-            INNER JOIN tai_khoans on bl.tai_khoan_id =tai_khoans.id WHERE bl.san_pham_id =:id';
+            $sql = 'SELECT bl.* , nguoi_dungs.ten_nguoi_dung,nguoi_dungs.avatar  FROM binh_luans as bl
+            INNER JOIN nguoi_dungs on bl.tai_khoan_id = nguoi_dungs.id WHERE bl.san_pham_id =:id';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([':id' => $id]);
             return $stmt->fetchAll();

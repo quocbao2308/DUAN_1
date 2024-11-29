@@ -14,6 +14,8 @@ require_once 'controllers/DonHangController.php';
 // require_once 'controllers/BannerController.php';
 require_once 'controllers/TrangThaiController.php';
 require_once 'controllers/sanphamController.php';
+require_once 'controllers/UserController.php';
+
 // require_once 'controllers/KhuyenMaiController.php';
 
 
@@ -28,6 +30,8 @@ require_once 'models/DonHang.php';
 require_once 'models/TrangThai.php';
 require_once 'models/sanpham.php';      // quản lý sp 
 // require_once 'models/KhuyenMai.php';
+require_once 'models/User.php';
+
 
 // Route
 $act = $_GET['act'] ?? '/';
@@ -46,13 +50,6 @@ match ($act) {
      'sua-danh-muc'        => (new DanhMucController())->update(),
      'xoa-danh-muc'        => (new DanhMucController())->destroy(),
 
-     //     // Quản lý người dùng
-     //     'users'               => (new UserController())->index(),
-     //     'form-them-user'      => (new UserController())->create(),
-     //     'them-user'           => (new UserController())->store(),
-     //     'form-sua-user'       => (new UserController())->edit(),
-     //     'sua-user'            => (new UserController())->update(),
-     //     'xoa-user'            => (new UserController())->destroy(),
 
      //     'banners'               => (new BannerController())->index(),
      //     'form-them-banner'      => (new BannerController())->create(),
@@ -96,10 +93,19 @@ match ($act) {
      //     'form-sua-khuyen-mai'       => (new KhuyenMaiController())->edit(),
      //     'sua-khuyen-mai'            => (new KhuyenMaiController())->update(),
      //     'xoa-khuyen-mai'            => (new KhuyenMaiController())->destroy(),
-     //     //     //quản lý đơn hàng
+     //quản lý đơn hàng
      //        
      'don-hangs'           => (new DonHangController())->index(),
      'form-sua-don-hang'   => (new DonHangController())->editDonHang(),
      'sua-don-hang'        => (new DonHangController())->postEditDonHang(),
      'chi-tiet-don-hang' => (new DonHangController())->detailDonhang(),
+     ///Quản lý người dùng
+     'users' => (new UserController())->ListUser(),  // Hiển thị danh sách người dùng
+     'add-user' => (new UserController())->Create(),  // Hiển thị form tạo người dùng
+     'handle-create-user' => (new UserController())->handleCreate(),  // Xử lý tạo người dùng
+     'update-user' => (new UserController())->ShowUpdate(),  // Hiển thị form cập nhật người dùng
+     'handle-update-user' => (new UserController())->handleUpdate(),  // Xử lý cập nhật người dùng
+     'delete-user' => (new UserController())->handleDelete(),  // Xử lý xóa người dùng
+
+
 };

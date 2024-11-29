@@ -6,24 +6,29 @@ class HomeController
 
     public $modelSanPham;
     public $modelTaiKhoan;
+    public $modelDanhMuc;
 
     public function __construct()
     {
         require_once 'models/SanPham.php';
         $this->modelSanPham = new SanPham();
         $this->modelTaiKhoan = new TaiKhoan();
+        
     }
 
-    public function index() {
-        echo "ok";
-    }
+  
 
     public function home (){
+        
         $listSanPham = $this->modelSanPham->getAllSanPham();
+        
+        $listDanhMuc =(new DanhMuc)->getAll(); 
+        // var_dump($listSanPham);die; 
         require_once './views/home.php';
     }
 
     public function chiTietSanPham(){
+        
         $id = $_GET['id_san_pham'];
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
     
@@ -39,21 +44,33 @@ class HomeController
             header("location: ".BASE_URL);
         }
     }
+    public function danhmuc(){
+        
+        $id=$_GET['id']??"";
+        $sanPhamDanhMuc = $this->modelSanPham->getAllSanPhamByDanhMuc($id);
+        require_once './views/sanPhamDanhMuc.php';
+        // var_dump($sanPhamDanhMuc);
+        // die;
+    }
 
     public function formLogin(){
         require_once '../base_du_an_1/views/auth/formLogin.php';
-        // deleteSessionError();
+        deleteSessionError();
         exit();
     }
 
     public function postLogin(){
         if($_SERVER['REQUEST_METHOD']=='POST'){
+            // var_dump('hada'); die();
             $email = $_POST['email'];
             $password = $_POST['password'];
-
             $user = $this->modelTaiKhoan->checkLogin($email,$password);
+            
+            // var_dump($user); die();
+
             if($user == $email){
-                $_SESSION['user_client']=$user;
+                $_SESSION['user_client']= $user;
+                
                 header("location:".BASE_URL);
                 exit();
             }else{

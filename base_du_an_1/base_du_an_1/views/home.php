@@ -98,64 +98,7 @@
     </div>
     <!-- service policy area end -->
 
-    <!-- banner statistics area start -->
-    <!-- <div class="banner-statistics-area">
-            <div class="container">
-                <div class="row row-20 mtn-20">
-                    <div class="col-sm-6">
-                        <figure class="banner-statistics mt-20">
-                            <a href="#">
-                                <img src="assets/img/banner/img1-top.jpg" alt="product banner">
-                            </a>
-                            <div class="banner-content text-right">
-                                <h5 class="banner-text1">BEAUTIFUL</h5>
-                                <h2 class="banner-text2">Wedding<span>Rings</span></h2>
-                                <a href="shop.html" class="btn btn-text">Shop Now</a>
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="col-sm-6">
-                        <figure class="banner-statistics mt-20">
-                            <a href="#">
-                                <img src="assets/img/banner/img2-top.jpg" alt="product banner">
-                            </a>
-                            <div class="banner-content text-center">
-                                <h5 class="banner-text1">EARRINGS</h5>
-                                <h2 class="banner-text2">Tangerine Floral <span>Earring</span></h2>
-                                <a href="shop.html" class="btn btn-text">Shop Now</a>
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="col-sm-6">
-                        <figure class="banner-statistics mt-20">
-                            <a href="#">
-                                <img src="assets/img/banner/img3-top.jpg" alt="product banner">
-                            </a>
-                            <div class="banner-content text-center">
-                                <h5 class="banner-text1">NEW ARRIVALLS</h5>
-                                <h2 class="banner-text2">Pearl<span>Necklaces</span></h2>
-                                <a href="shop.html" class="btn btn-text">Shop Now</a>
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="col-sm-6">
-                        <figure class="banner-statistics mt-20">
-                            <a href="#">
-                                <img src="assets/img/banner/img4-top.jpg" alt="product banner">
-                            </a>
-                            <div class="banner-content text-right">
-                                <h5 class="banner-text1">NEW DESIGN</h5>
-                                <h2 class="banner-text2">Diamond<span>Jewelry</span></h2>
-                                <a href="shop.html" class="btn btn-text">Shop Now</a>
-                            </div>
-                        </figure>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-
-
-    <!-- banner statistics area end -->
+   
 
     <!-- product area start -->
     <section class="product-area section-padding">
@@ -165,7 +108,7 @@
                     <!-- section title start -->
                     <div class="section-title text-center">
                         <h2 class="title">Sản phẩm của chúng tôi</h2>
-                        <!-- <p class="sub-title">Add our products to weekly lineup</p> -->
+                        <!-- <p class="sub-title">Add our products to weekly lineup</p> --> 
                     </div>
                     <!-- section title start -->
                 </div>
@@ -179,6 +122,8 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab1">
                                 <div class="product-carousel-4 slick-row-10 slick-arrow-style">
+                                   
+                                    
                                     <?php foreach ($listSanPham as $key=> $sanPham): ?>
                                         <!-- product item start -->
                                         <div class="product-item">
@@ -223,7 +168,7 @@
                                                 </div>
 
                                                 <div class="cart-hover">
-                                                    <button class="btn btn-cart">Chi Tiết Sản Phẩm</button>
+                                                   <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .$sanPham['id'];?>"> <button class="btn btn-cart">Chi Tiết Sản Phẩm</button></a>
                                                 </div>
                                             </figure>
                                             <div class="product-caption text-center">

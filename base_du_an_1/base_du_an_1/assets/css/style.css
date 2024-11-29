@@ -3225,6 +3225,14 @@ textarea:focus {
   border-radius: 50%;
 }
 
+/*  */
+.pri-img,.sec-img{
+  width: 218px;
+  height: 218px;
+  object-fit: cover;
+}
+/*  */
+
 .c-lightblue {
   background-color: #b0c4de;
 }
