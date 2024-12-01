@@ -22,14 +22,17 @@ function connectDB()
         echo ("Connection failed: " . $e->getMessage());
     }
 }
-function formatPrice($price){
-    return number_format($price, 0,'.','.');
+function formatPrice($price)
+{
+    return number_format($price, 0, '.', '.');
 }
-function ListDM(){
-    $listDanhMuc = (new DanhMuc)->getAll(); 
+function ListDM()
+{
+    $listDanhMuc = (new DanhMuc)->getAllDM();
     return $listDanhMuc;
 }
-function deleteSessionError() {
+function deleteSessionError()
+{
     // Ensure session is started
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
@@ -41,5 +44,58 @@ function deleteSessionError() {
         session_unset();
     }
 
-
 }
+    function uploadFile($file, $folderUpload)
+    {
+        $pathStorage = $folderUpload .  time() . $file['name'];
+
+        $from = $file['tmp_name'];
+        $to = PATH_ROOT . $pathStorage;
+
+        if (move_uploaded_file($from, $to)) {
+            return $pathStorage;
+        }
+        return null;
+    }
+    function deleteFile($file)
+    {
+        $pathDelete = PATH_ROOT . $file;
+        if (file_exists($pathDelete)) {
+            unlink($pathDelete);
+        }
+    }
+    
+    function checkLoginAdmin()
+    {
+        if (!isset($_SESSION['user_admin'])) {
+            require_once './views/auth/formLogin.php';
+            exit();
+        }
+    }
+
+    function deleteSessionErrors(){
+        if(isset($_SESSION['flash'])){
+            // Hủy session sau khi load trang
+            unset($_SESSION['flash']);
+            unset($_SESSION['errors']);
+            unset($_SESSION['thongBao']);
+            unset($_SESSION['old_data']);
+            unset($_SESSION['successMk']);
+            unset($_SESSION['successTt']);
+            unset($_SESSION['successAnh']);
+            unset($_SESSION['errorsKH']);
+            unset($_SESSION['tong']);
+            unset($_SESSION['layMk']);
+            unset( $_SESSION['dat_hang_thanh_cong']);
+    
+    
+    
+    
+    
+    
+    
+         //   session_unset();
+          //  session_destroy();
+        }
+    }
+

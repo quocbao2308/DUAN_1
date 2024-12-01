@@ -133,7 +133,7 @@
                         <ul class="nav nav-sm flex-column"> -->
                             <li class="nav-item">
                                 <a href="?act=don-hangs" class="nav-link" data-key="t-sweet-alerts">
-                                    Danh sách
+                                    Danh sách đơn hàng
                                 </a>
                             </li>
                         <!-- </ul>

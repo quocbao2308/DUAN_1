@@ -67,8 +67,6 @@ class SanPham
     // Cập nhật dữ liệu sản phẩm
     public function updateData($id, $ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $so_luong, $danh_muc_id, $ngay_nhap, $mo_ta, $trang_thai, $hinh_anh)
     {
-
-
         try {
             $sql = 'UPDATE san_phams 
                    SET ten_san_pham = :ten_san_pham,

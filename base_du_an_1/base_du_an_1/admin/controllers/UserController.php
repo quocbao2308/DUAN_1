@@ -2,10 +2,13 @@
 class UserController
 {
     public $modelUser;
+    public $modelTaiKhoan;
 
     public function __construct()
     {
         $this->modelUser = new User();
+        $this->modelTaiKhoan = new TaiKhoan();
+
     }
 
     // Hiển thị danh sách người dùng
@@ -30,7 +33,7 @@ class UserController
             $email = $_POST['email'];
             $sdt = $_POST['sdt'] ?? null; // Nếu không có giá trị thì là null
             $dia_chi = $_POST['dia_chi'] ?? null; // Nếu không có giá trị thì là null
-            $mat_khau = $_POST['mat_khau'];
+            $mat_khau = password_hash($_POST['mat_khau'], PASSWORD_DEFAULT);
             $ngay_sinh = $_POST['ngay_sinh'];
             $gioi_tinh = $_POST['gioi_tinh'];
             $vai_tro = $_POST['vai_tro'] ?? 'user'; // Mặc định vai trò là user nếu không chọn gì
@@ -96,7 +99,7 @@ class UserController
             $id = $_POST['user_id'];
             $ten_nguoi_dung = $_POST['ten_nguoi_dung'];
             $email = $_POST['email'];
-            $mat_khau = $_POST['mat_khau'];
+            $mat_khau = password_hash($_POST['mat_khau'], PASSWORD_DEFAULT);
             $ngay_sinh = $_POST['ngay_sinh'];
             $gioi_tinh = $_POST['gioi_tinh'];
             $trang_thai = $_POST['trang_thai'];
@@ -118,20 +121,72 @@ class UserController
 
             // Cập nhật thông tin người dùng với vai trò và avatar
             $this->modelUser->updateUser($id, $ten_nguoi_dung, $email, $mat_khau, $ngay_sinh, $gioi_tinh, $avatar, $trang_thai, $vai_tro);
-            var_dump($vai_tro);
+            // var_dump($vai_tro);
             // die;
             header('Location: ?act=users');
         }
     }
 
-
     // Xử lý xóa người dùng
     public function handleDelete()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_POST['id'];
+        
+            $id = $_GET['id'];
+            
             $this->modelUser->deleteUser($id);
-            header('Location: ?act=users');
+        header('Location: ?act=users');
+        
+    }
+
+    public function formLogin()
+    {
+        if(isset($_SESSION['user_admin'])){
+            header('Location:'.BASE_URL_ADMIN);
+            exit();
+        }
+        require_once './views/auth/formLogin.php';
+        deleteSessionErrors();
+    }
+
+    public function login()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // lay dl
+            $email = $_POST['email'];
+            $password = $_POST['password'];
+
+            // xử lý kiểm tra thông tin đăng nhập
+            $user = $this->modelTaiKhoan->checkLogin($email, $password);
+            //    var_dump($user);die();
+
+            if ($user == $email) {
+                // dn thanh cong
+                // Luu thong tin vao session
+                $_SESSION['user_admin'] = $user;
+                header("Location:" . BASE_URL_ADMIN);
+                exit();
+            } else {
+                // Lỗi thì lưu lỗi vào session
+                $_SESSION['errors'] = $user;
+                //    var_dump($_SESSION['errors']);die();
+
+                $_SESSION['flash'] = true;
+
+                header("Location:" . BASE_URL_ADMIN . '?act=login-admin');
+                exit();
+            }
         }
     }
+
+
+    
+
+    public function logout()
+    {
+        if (isset($_SESSION['user_admin'])) {
+            unset($_SESSION['user_admin']);
+            header('Location:' . BASE_URL_ADMIN . '?act=login-admin');
+        }
+    }
+
 }

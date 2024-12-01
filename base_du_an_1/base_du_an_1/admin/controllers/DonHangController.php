@@ -13,9 +13,7 @@ class DonHangController
    public function index()
    {
       $donhangs = $this->modelDonHang->getAll();
-      // đưa dữ liệu ra view
-      // echo"<pre>";
-      // print_r($donhangs);die;
+      
       require_once './views/donhang/listdonHang.php';
    }
 

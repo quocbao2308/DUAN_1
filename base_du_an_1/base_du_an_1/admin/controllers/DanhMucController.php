@@ -12,7 +12,7 @@ class DanhMucController
     public function index()
     {
         // lấy ra dữ liệu danh mục
-        $danhMucs = $this->modelDanhMuc->getAll();
+        $danhMucs = $this->modelDanhMuc->getAllDM();
         //  var_dump($danhMucs);
 
         // đưa dữ liệu ra view

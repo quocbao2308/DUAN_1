@@ -11,7 +11,7 @@ class DanhMuc
         $this->conn = connectDB();
     }
     //danh sách danh mục
-    public function getAll()
+    public function getAllDM()
     {
         try {
             $sql = 'SELECT * FROM danh_mucs ';

@@ -24,8 +24,8 @@ class SanPhamController
     public function create()
     {
         $danhMucModel = new DanhMuc(); // Tạo đối tượng Model
-        $listDanhMuc = $danhMucModel->getAll(); // Lấy danh sách danh mục
-        $listDanhMuc = $this->modelDanhMuc->getAll();
+        $listDanhMuc = $danhMucModel->getAllDM(); // Lấy danh sách danh mục
+        $listDanhMuc = $this->modelDanhMuc->getAllDM();
         // echo (3);
 
         require_once './views/sanpham/createsanpham.php';
@@ -85,7 +85,7 @@ class SanPhamController
     {
         $id = $_GET['sanpham_id'];
         $sanpham = $this->modelSanPham->getDetailData($id);
-        $listDanhMuc = $this->modelDanhMuc->getAll();
+        $listDanhMuc = $this->modelDanhMuc->getAllDM();
         require_once './views/sanpham/editsanpham.php';
     }
 

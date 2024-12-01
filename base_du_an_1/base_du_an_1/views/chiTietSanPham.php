@@ -22,7 +22,7 @@
         </div>
     </div>
     <!-- breadcrumb area end -->
-   
+
     <!-- page main wrapper start -->
     <div class="shop-main-wrapper section-padding pb-0">
         <div class="container">
@@ -42,7 +42,7 @@
                                 </div>
                                 <img src="<?= $sanPham['hinh_anh'] ?>" alt="">
                                 <img src="admin/uploads/avatars/674831d868155-giaythethao3.webp" alt="">
-                                
+
                             </div>
                             <div class="col-lg-7">
                                 <div class="product-details-des">
@@ -74,18 +74,20 @@
                                         <span><?= $sanPham['so_luong'] . ' trong kho' ?></span>
                                     </div>
                                     <p class="pro-desc"><?= $sanPham['mo_ta'] ?> </p>
-                                    <div class="quantity-cart-box d-flex align-items-center">
-                                        <h6 class="option-title">Số lượng:</h6>
-                                        <div class="quantity">
-                                            <div class="pro-qty"><input type="text" value="1"></div>
+
+                                    <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                                        <p class="pro-desc"><?= $sanPham['mo_ta'] ?></p>
+                                        <div class="quantity-cart-box d-flex align-items-center">
+                                            <h6 class="option-title">Số lượng:</h6>
+                                            <div class="quantity">
+                                                <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                                <div class="pro-qty"><input type="text" value="1" name="so_luong"></div>
+                                            </div>
+                                            <div class="action_link">
+                                                <button class="btn btn-cart2" type="submit" href="#">Thêm vào giỏ hàng</button>
+                                            </div>
                                         </div>
-                                        <div class="action_link">
-                                            <a class="btn btn-cart2" href="#">Thêm vào giỏ hàng</a>
-                                        </div>
-                                    </div>
-
-
-
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -208,7 +210,7 @@
                                     </div>
 
                                     <div class="cart-hover">
-                                    <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' .$sanPham['id'];?>"><button class="btn btn-cart">Chi Tiết Sản Phẩm</button></a>
+                                        <a href="<?= BASE_URL . '?act=chi-tiet-san-pham&id_san_pham=' . $sanPham['id']; ?>"><button class="btn btn-cart">Chi Tiết Sản Phẩm</button></a>
                                     </div>
                                 </figure>
                                 <div class="product-caption text-center">
@@ -233,7 +235,23 @@
                             <!-- product item end -->
                         <?php endforeach ?>
 
-
+                        <div class="availability">
+                            <i class="fa fa-check-circle"></i>
+                            <span><?= $sanPham['so_luong'] . ' sản phẩm' ?></span>
+                        </div>
+                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
+                            <p class="pro-desc"><?= $sanPham['mo_ta'] ?></p>
+                            <div class="quantity-cart-box d-flex align-items-center">
+                                <h6 class="option-title">Số lượng:</h6>
+                                <div class="quantity">
+                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
+                                    <div class="pro-qty"><input type="text" value="1" name="so_luong"></div>
+                                </div>
+                                <div class="action_link">
+                                    <button class="btn btn-cart2" type="submit" href="#">Thêm vào giỏ hàng</button>
+                                </div>
+                            </div>
+                        </form>
 
                     </div>
                 </div>

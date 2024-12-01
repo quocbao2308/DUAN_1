@@ -15,14 +15,11 @@ class HomeController
         $this->modelTaiKhoan = new TaiKhoan();
         
     }
-
-  
-
     public function home (){
         
         $listSanPham = $this->modelSanPham->getAllSanPham();
         
-        $listDanhMuc =(new DanhMuc)->getAll(); 
+        $listDanhMuc =(new DanhMuc)->getAllDM(); 
         // var_dump($listSanPham);die; 
         require_once './views/home.php';
     }
@@ -31,10 +28,7 @@ class HomeController
         
         $id = $_GET['id_san_pham'];
         $sanPham = $this->modelSanPham->getDetailSanPham($id);
-    
-    
         $listAnhSanPham = $this->modelSanPham->getListAnhSanPham($id);
-    
         $listBinhLuan = $this ->modelSanPham->getBinhLuanFromSanPham($id);
         $listSanPhamCungDanhMuc = $this->modelSanPham->getListSanPhamDangMuc($sanPham['danh_muc_id']);
         if($sanPham){
@@ -45,7 +39,6 @@ class HomeController
         }
     }
     public function danhmuc(){
-        
         $id=$_GET['id']??"";
         $sanPhamDanhMuc = $this->modelSanPham->getAllSanPhamByDanhMuc($id);
         require_once './views/sanPhamDanhMuc.php';
@@ -64,22 +57,19 @@ class HomeController
             // var_dump('hada'); die();
             $email = $_POST['email'];
             $password = $_POST['password'];
+            // var_dump($email); 
             $user = $this->modelTaiKhoan->checkLogin($email,$password);
-            
-            // var_dump($user); die();
-
+    
             if($user == $email){
-                $_SESSION['user_client']= $user;
+                $_SESSION['user_client'] = $user;
                 
                 header("location:".BASE_URL);
                 exit();
             }else{
                 $_SESSION['error'] = $user;
-                $_SESSION['flash'] =true;
-                header("location:".BASE_URL .'?act=login');
+                $_SESSION['flash'] = true;
+                header("location:".BASE_URL .'?act=form-login');
             }
         }
     }
-
-
 }
