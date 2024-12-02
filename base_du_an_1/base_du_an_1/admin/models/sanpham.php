@@ -25,30 +25,33 @@ class SanPham
     }
 
     // Thêm sản phẩm
-    public function postData($ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $hinh_anh, $so_luong, $luot_xem, $ngay_nhap, $mo_ta, $danh_muc_id, $trang_thai)
-    {
-
-        try {
-            $sql = 'INSERT INTO san_phams (ten_san_pham,gia_san_pham,gia_khuyen_mai,hinh_anh,so_luong,luot_xem,ngay_nhap,mo_ta,danh_muc_id,trang_thai)
-                   VALUES (:ten_san_pham,:gia_san_pham,:gia_khuyen_mai,:hinh_anh,:so_luong,:luot_xem,:ngay_nhap,:mo_ta,:danh_muc_id,:trang_thai)';
+    public function postData($ten_san_pham, $gia_san_pham, $gia_khuyen_mai, $so_luong, $ngay_nhap, $danh_muc_id, $trang_thai, $mo_ta, $hinh_anh){
+        try{
+            $sql = "INSERT INTO san_phams (ten_san_pham, gia_san_pham, gia_khuyen_mai, so_luong, ngay_nhap, danh_muc_id, trang_thai, mo_ta, hinh_anh) VALUES (:ten_san_pham, :gia_san_pham, :gia_khuyen_mai, :so_luong, :ngay_nhap, :danh_muc_id, :trang_thai, :mo_ta, :hinh_anh)";
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':ten_san_pham', $ten_san_pham);
-            $stmt->bindParam(':gia_san_pham', $gia_san_pham);
-            $stmt->bindParam(':gia_khuyen_mai', $gia_khuyen_mai);
-            $stmt->bindParam(':hinh_anh', $hinh_anh);
-            $stmt->bindParam(':so_luong', $so_luong);
-            $stmt->bindParam(':luot_xem', $luot_xem);
-            $stmt->bindParam(':ngay_nhap', $ngay_nhap);
-            $stmt->bindParam(':mo_ta', $mo_ta);
-            $stmt->bindParam(':danh_muc_id', $danh_muc_id);
-            // var_dump($danh_muc_id);die;
-            $stmt->bindParam(':trang_thai', $trang_thai);
-            $stmt->execute();
-            return true;
-        } catch (Exception $e) {
-            echo 'Lỗi: ' . $e->getMessage();
+            $stmt->execute(
+                [
+                    ':ten_san_pham' => $ten_san_pham,
+                    ':gia_san_pham' => $gia_san_pham,
+                    ':gia_khuyen_mai' => $gia_khuyen_mai,
+                    ':so_luong' => $so_luong,
+                    ':ngay_nhap' => $ngay_nhap,
+                    ':danh_muc_id' => $danh_muc_id,
+                    ':trang_thai' => $trang_thai,
+                    ':mo_ta' => $mo_ta,
+                    ':hinh_anh' => $hinh_anh
+
+                ]
+            );
+            
+            // Lấy id sản phẩm vừa thêm
+            return $this->conn->lastInsertId();
+        }catch(Exception $e){
+            echo "Lỗi: ".$e->getMessage();
         }
     }
+
+
 
     // Lấy thông tin chi tiết
     public function getDetailData($id)
@@ -81,18 +84,21 @@ class SanPham
                    WHERE id = :id';
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':ten_san_pham', $ten_san_pham);
-            $stmt->bindParam(':gia_san_pham', $gia_san_pham);
-            $stmt->bindParam(':gia_khuyen_mai', $gia_khuyen_mai);
-            $stmt->bindParam(':so_luong', $so_luong);
-            $stmt->bindParam(':danh_muc_id', $danh_muc_id);
-            $stmt->bindParam(':ngay_nhap', $ngay_nhap);
-            $stmt->bindParam(':mo_ta', $mo_ta);
-            $stmt->bindParam(':trang_thai', $trang_thai);
-            $stmt->bindParam(':hinh_anh', $hinh_anh);
+            
 
-            $stmt->execute();
+            $stmt->execute(         [
+                ':ten_san_pham' => $ten_san_pham,
+                ':gia_san_pham' => $gia_san_pham,
+                ':gia_khuyen_mai' => $gia_khuyen_mai,
+                ':so_luong' => $so_luong,
+                ':ngay_nhap' => $ngay_nhap,
+                ':danh_muc_id' => $danh_muc_id,
+                ':trang_thai' => $trang_thai,
+                ':mo_ta' => $mo_ta,
+                ':hinh_anh' => $hinh_anh,
+                ':id'=> $id
+
+            ]);
             return true;
         } catch (Exception $e) {
             echo 'Lỗi khi cập nhật sản phẩm: ' . $e->getMessage();

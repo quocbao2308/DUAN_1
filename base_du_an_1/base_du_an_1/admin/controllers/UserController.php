@@ -39,9 +39,6 @@ class UserController
             $vai_tro = $_POST['vai_tro'] ?? 'user'; // Mặc định vai trò là user nếu không chọn gì
             $trang_thai = $_POST['trang_thai'];
 
-
-
-
             // Xử lý upload avatar
             $avatar = null;
             if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] == 0) {

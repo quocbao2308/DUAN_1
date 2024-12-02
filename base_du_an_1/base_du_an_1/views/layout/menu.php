@@ -77,7 +77,7 @@
                                                 <li><a href="?act=logout">Đăng xuất</a></li>
 
                                             <?php }else{ ?>
-                                                 <li><a href="<?= BASE_URL . '?act=login' ?>">Đăng nhập</a></li>
+                                                 <li><a href="<?= BASE_URL . '?act=form-login' ?>">Đăng nhập</a></li>
                                             <li><a href="login-register.html">ĐĂng ký</a></li>
                                             <?php } ?>
                                                 

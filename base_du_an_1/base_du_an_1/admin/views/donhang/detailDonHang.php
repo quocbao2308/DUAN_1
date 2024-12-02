@@ -103,9 +103,9 @@
                                             <div class="col-sm-4 invoice-col">
                                                 Người đặt
                                                 <address>
-                                                    <strong><?= $donHang['ten'] ?></strong><br>
+                                                    <strong><?= $donHang['ten_nguoi_dung'] ?></strong><br>
                                                     Email: <?= $donHang['email'] ?><br>
-                                                    Phone: <?= $donHang['so_dien_thoai'] ?><br>
+                                                    Phone: <?= $donHang['sdt'] ?><br>
 
                                                 </address>
                                             </div>

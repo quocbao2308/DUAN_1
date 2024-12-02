@@ -22,7 +22,7 @@ class DonHangController
       $don_hang_id = $_GET['id_don_hang'];
       $donHang = $this->modelDonHang->getDetailDonHang($don_hang_id);
       $sanPhamDonHang = $this->modelDonHang->getlistSpDonHang($don_hang_id);
-      // var_dump($sanPhamDonHang);die;
+      // var_dump($sanPhamDonHang);die();
       $listTrangThaiDonHang = $this->modelDonHang->getAllTrangThaiDonHang();
       
       require_once './views/donhang/detailDonHang.php';

@@ -8,9 +8,9 @@ class DonHang
     $this->conn = connectDB();
   }
 
-  public function addDonHang($tai_khoan_id, $ten_nguoi_nhan, $email_nguoi_nhan, $sdt_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $tong_tien, $phuong_thuc_thanh_toan_id, $ngay_dat, $ma_don_hang ){
+  public function addDonHang($tai_khoan_id, $ten_nguoi_nhan, $email_nguoi_nhan, $sdt_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $tong_tien, $phuong_thuc_thanh_toan_id, $ngay_dat, $ma_don_hang,$trang_thai_id  ){
     try {
-        $sql = "INSERT INTO don_hangs (tai_khoan_id, ten_nguoi_nhan, email_nguoi_nhan, sdt_nguoi_nhan, dia_chi_nguoi_nhan, ghi_chu, tong_tien, phuong_thuc_thanh_toan_id, ngay_dat, ma_don_hang) VALUES(:tai_khoan_id, :ten_nguoi_nhan, :email_nguoi_nhan, :sdt_nguoi_nhan, :dia_chi_nguoi_nhan, :ghi_chu, :tong_tien, :phuong_thuc_thanh_toan_id, :ngay_dat ,:ma_don_hang)";
+        $sql = "INSERT INTO don_hangs (tai_khoan_id, ten_nguoi_nhan, email_nguoi_nhan, sdt_nguoi_nhan, dia_chi_nguoi_nhan, ghi_chu, tong_tien, phuong_thuc_thanh_toan_id, ngay_dat, ma_don_hang,trang_thai_id ) VALUES(:tai_khoan_id, :ten_nguoi_nhan, :email_nguoi_nhan, :sdt_nguoi_nhan, :dia_chi_nguoi_nhan, :ghi_chu, :tong_tien, :phuong_thuc_thanh_toan_id, :ngay_dat ,:ma_don_hang,:trang_thai_id )";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(
           [
@@ -24,6 +24,7 @@ class DonHang
             ':phuong_thuc_thanh_toan_id' => $phuong_thuc_thanh_toan_id,
             ':ngay_dat' => $ngay_dat,
             ':ma_don_hang' => $ma_don_hang,
+            'trang_thai_id' =>$trang_thai_id 
 
           ]
         );
@@ -57,7 +58,7 @@ class DonHang
   public function getAllDonHang($id)
   {
     try {
-      $sql = "SELECT don_hangs.*,trang_thai_don_hangs.ten_trang_thai  FROM don_hangs 
+      $sql = "SELECT don_hangs.*,trang_thai_don_hangs.trang_thai  FROM don_hangs 
             INNER JOIN trang_thai_don_hangs ON don_hangs.trang_thai_id = trang_thai_don_hangs.id 
       
               WHERE don_hangs.id = :id";
@@ -73,4 +74,5 @@ class DonHang
       echo "Lỗi: " . $e->getMessage();
     }
   }
+  
 }

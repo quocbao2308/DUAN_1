@@ -86,9 +86,9 @@
                                                             <th scope="col">Số điện thoại</th>
                                                             <th scope="col">Ngày đặt</th>
                                                             <th scope="col">Tổng tiền</th>
-                                                            <th scope="col">Trạng thái id</th>
-                                                            <!-- <th scope="col">Trạng thái</th> -->
-                                                            <th scope="col">hành động</th>
+                                                            <!-- <th scope="col">Trạng thái id</th> -->
+                                                            <th scope="col">Trạng thái</th>
+                                                            <th scope="col">Hành động</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>

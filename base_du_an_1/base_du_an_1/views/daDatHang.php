@@ -38,7 +38,7 @@
             </div>
             <p class="text-success">Ngày đặt: <?=$thongTinDonHang[0]['ngay_dat'] ?></p>
             <p class="text-success">Mã đơn hàng: <?=$thongTinDonHang[0]['ma_don_hang']?></p>
-            <p class="text-success">Trạng thái đơn hàng: <?=$thongTinDonHang[0]['ten_trang_thai']?></p>
+            <p class="text-success">Trạng thái đơn hàng: <?=$thongTinDonHang[0]['trang_thai']?></p>
 
             <div class="row">
                 <!-- Checkout Billing Details -->

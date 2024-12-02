@@ -51,7 +51,9 @@
                                         <div class="live-preview">
                                             <form action="?act=sua-san-pham" method="POST"
                                                 enctype="multipart/form-data">
+                                                <input type="hidden" name="id" value="<?= $_GET['sanpham_id'] ?>">
                                                 <div class="row">
+                                                    
                                                     <!-- Tên sản phẩm -->
                                                     <div class="col-md-6 mb-3">
                                                         <label for="ten_san_pham" class="form-label">Tên sản

@@ -235,23 +235,7 @@
                             <!-- product item end -->
                         <?php endforeach ?>
 
-                        <div class="availability">
-                            <i class="fa fa-check-circle"></i>
-                            <span><?= $sanPham['so_luong'] . ' sản phẩm' ?></span>
-                        </div>
-                        <form action="<?= BASE_URL . '?act=them-gio-hang' ?>" method="POST">
-                            <p class="pro-desc"><?= $sanPham['mo_ta'] ?></p>
-                            <div class="quantity-cart-box d-flex align-items-center">
-                                <h6 class="option-title">Số lượng:</h6>
-                                <div class="quantity">
-                                    <input type="hidden" name="san_pham_id" value="<?= $sanPham['id'] ?>">
-                                    <div class="pro-qty"><input type="text" value="1" name="so_luong"></div>
-                                </div>
-                                <div class="action_link">
-                                    <button class="btn btn-cart2" type="submit" href="#">Thêm vào giỏ hàng</button>
-                                </div>
-                            </div>
-                        </form>
+                     
 
                     </div>
                 </div>

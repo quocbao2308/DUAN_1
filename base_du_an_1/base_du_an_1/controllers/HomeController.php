@@ -7,12 +7,16 @@ class HomeController
     public $modelSanPham;
     public $modelTaiKhoan;
     public $modelDanhMuc;
+    public $modelGioHang;
+    public $modelDonHang;
 
     public function __construct()
     {
         require_once 'models/SanPham.php';
         $this->modelSanPham = new SanPham();
         $this->modelTaiKhoan = new TaiKhoan();
+        $this->modelGioHang= new GioHang();
+        $this->modelDonHang = new DonHang();
         
     }
     public function home (){
@@ -71,5 +75,35 @@ class HomeController
                 header("location:".BASE_URL .'?act=form-login');
             }
         }
+    }
+    public function daDatHang()
+    {
+        $thongTinDonHang = $this->modelDonHang->getAllDonHang($_SESSION['thong_tin_don_hang']['id']);
+        $listDanhMuc = $this->modelSanPham->getAllDanhMuc();
+        
+        if (isset($_SESSION['user_client'])) {
+
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            //    var_dump($mail['id']);die();
+
+            // lẤy dl giỏ hàng
+            $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
+            if (!$gioHang) {
+                $_SESSION['flash'] = true;
+                $_SESSION['dat_hang_thanh_cong'] = 'Đã đặt hàng thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi';
+                $gioHangId = $this->modelGioHang->addGioHang($user['id']);
+                $gioHang = ['id' => $gioHangId];
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            } else {
+                $_SESSION['flash'] = true;
+                $_SESSION['dat_hang_thanh_cong'] = 'Đã đặt hàng thành công! Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi';
+                $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
+            }
+
+        } else {
+            header('Location:' . BASE_URL . '?act=form-login');
+        }
+        require_once './views/daDatHang.php';
+        deleteSessionErrors();
     }
 }

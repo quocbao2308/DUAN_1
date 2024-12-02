@@ -59,7 +59,7 @@ class SanPhamController
                 echo "Lỗi upload ảnh: " . $e->getMessage();
                 exit();
             }
-     $newPath = str_replace("../", "", $file_thumb);
+                $newPath = str_replace("../", "", $file_thumb);
 
             // Kiểm tra lỗi
             $errors = [];
@@ -123,6 +123,7 @@ class SanPhamController
 
             // mảng hình ảnh
             // $img_array = $_FILES['img_array'];
+            // var_dump($_POST);die;
 
             // Kiểm tra lỗi
             $errors = [];
@@ -130,6 +131,7 @@ class SanPhamController
             if (empty($gia_san_pham)) $errors['gia_san_pham'] = 'Giá sản phẩm không được để trống';
             if (empty($danh_muc_id)) $errors['danh_muc_id'] = 'Danh mục sản phẩm không được để trống';
             if (empty($ngay_nhap)) $errors['ngay_nhap'] = 'Ngày nhập sản phẩm không được để trống';
+        //   var_dump($errors);die;
 
             if (empty($errors)) {
                 $this->modelSanPham->updateData(
@@ -144,7 +146,7 @@ class SanPhamController
                     $trang_thai,
                     $file_thumb,
                 );
-                var_dump($_SERVER);
+                // var_dump($_SERVER);
                 // die;
                 unset($_SESSION['errors']);
                 header('Location: index.php?act=san-phams');
