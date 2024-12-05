@@ -209,7 +209,41 @@ class GioHangDonHangController
     }
 
 
-    public function chiTietMuaHang() {}
+    public function chiTietMuaHang() {
+        if (isset($_SESSION['user_client'])) {
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $tai_khoan_id = $user['id'];
+
+            $donHangId =$_GET['id'];
+            //Lấy ra danh sách trạng thái
+            $trangThaiDonHangs = $this->modelDonHang->getTrangThai();
+            $trangThais =array_column($trangThaiDonHangs , 'trang_thai', 'id');
+
+            //Lấy ra danh sách phương thức thanh toán
+            $phuongThucThanhToans = $this->modelDonHang->getPhuongThucThanhToan();
+            $phuongThucs = array_column($phuongThucThanhToans, 'ten_phuong_thuc' , 'id');
+
+            $donHang =$this->modelDonHang->getDonHangById($donHangId);
+
+            $chiTietdonHang = $this->modelDonHang->getChiTietDonHangByDonHangId($donHangId);
+
+
+            // echo "<pre>";
+            // print_r($donHang);
+            // print_r($chiTietdonHang);
+            if ($donHang['tai_khoan_id'] != $tai_khoan_id) {
+                echo " Bạn không có quyền truy cập đơn hàng này";
+                exit;
+            }
+
+            require_once './views/chiTietMuaHang.php';
+        }else{
+            var_dump("Đăng nhập hay đăng ký đi");
+            exit;
+        }
+    }
+
+
     public function huyMuaHang() {
         if (isset($_SESSION['user_client'])) {
             $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
