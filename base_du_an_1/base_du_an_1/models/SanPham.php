@@ -86,6 +86,7 @@ class SanPham
             echo "lỗi" . $e->getMessage();
         }
     }
+
     public function getAllDanhMuc(){
         try{
             $sql = "SELECT * FROM danh_mucs";

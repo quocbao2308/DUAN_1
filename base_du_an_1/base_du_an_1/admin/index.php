@@ -82,7 +82,6 @@ match ($act) {
      // route auth
      'login-admin' =>(new UserController)->formLogin(),
      'check-login-admin' =>(new UserController)->login(),
-
      'logout-admin' =>(new UserController)->logout(),
 
 };

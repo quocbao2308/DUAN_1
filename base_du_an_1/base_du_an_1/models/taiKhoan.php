@@ -20,7 +20,7 @@ class TaiKhoan
          
         
             if ($user && password_verify($mat_khau, $user['mat_khau'])) {
-                if ($user['vai_tro'] == 2) {
+                if ($user['vai_tro'] == 1) {
                     if ($user['trang_thai'] == 1) {
                         return $user['email'];
                     }else{
@@ -89,91 +89,91 @@ class TaiKhoan
         }
     }
 
-    public function updateTaiKhoan($id,$ho_ten,$email,$so_dien_thoai,$dia_chi){
+    // public function updateTaiKhoan($id,$ho_ten,$email,$so_dien_thoai,$dia_chi){
 
-        try{
-            $sql = "UPDATE nguoi_dungs 
-                    SET 
-                    ho_ten = :ho_ten,
-                    email = :email,
-                    so_dien_thoai = :so_dien_thoai,
-                    dia_chi = :dia_chi
-                    WHERE id = :id
+    //     try{
+    //         $sql = "UPDATE nguoi_dungs 
+    //                 SET 
+    //                 ho_ten = :ho_ten,
+    //                 email = :email,
+    //                 so_dien_thoai = :so_dien_thoai,
+    //                 dia_chi = :dia_chi
+    //                 WHERE id = :id
 
-                                        ";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(
-                [
-                    ':ho_ten' => $ho_ten,
-                    ':email' => $email,
-                    ':so_dien_thoai' => $so_dien_thoai,
-                    ':dia_chi' => $dia_chi,
-                    ':id' => $id
-                ]
-            );
+    //                                     ";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->execute(
+    //             [
+    //                 ':ho_ten' => $ho_ten,
+    //                 ':email' => $email,
+    //                 ':so_dien_thoai' => $so_dien_thoai,
+    //                 ':dia_chi' => $dia_chi,
+    //                 ':id' => $id
+    //             ]
+    //         );
             
-            // Lấy id sản phẩm vừa thêm
-            return true;
-        }catch(Exception $e){
-            echo "Lỗi: ".$e->getMessage();
-        }
-    }
+    //         // Lấy id sản phẩm vừa thêm
+    //         return true;
+    //     }catch(Exception $e){
+    //         echo "Lỗi: ".$e->getMessage();
+    //     }
+    // }
 
 
 
-    public function updateMatKhau($id,$mat_khau){
+    // public function updateMatKhau($id,$mat_khau){
 
-        try{
-            $sql = "UPDATE nguoi_dungs 
-                    SET 
-                    mat_khau = :mat_khau
+    //     try{
+    //         $sql = "UPDATE nguoi_dungs 
+    //                 SET 
+    //                 mat_khau = :mat_khau
                 
-                    WHERE id = :id
+    //                 WHERE id = :id
 
-                                        ";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(
-                [
-                    ':mat_khau' => $mat_khau,
+    //                                     ";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->execute(
+    //             [
+    //                 ':mat_khau' => $mat_khau,
            
-                    ':id' => $id
-                ]
-            );
+    //                 ':id' => $id
+    //             ]
+    //         );
             
-            // Lấy id sản phẩm vừa thêm
-            return true;
-        }catch(Exception $e){
-            echo "Lỗi: ".$e->getMessage();
-        }
-    }
+    //         // Lấy id sản phẩm vừa thêm
+    //         return true;
+    //     }catch(Exception $e){
+    //         echo "Lỗi: ".$e->getMessage();
+    //     }
+    // }
 
 
 
     
-    public function updateAnhDaiDien($id,$anh_dai_dien){
+    // public function updateAnhDaiDien($id,$anh_dai_dien){
 
-        try{
-            $sql = "UPDATE nguoi_dungs 
-                    SET 
-                    avatar = :anh_dai_dien
+    //     try{
+    //         $sql = "UPDATE nguoi_dungs 
+    //                 SET 
+    //                 avatar = :anh_dai_dien
                   
-                    WHERE id = :id
+    //                 WHERE id = :id
 
-                                        ";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute(
-                [
-                    ':anh_dai_dien' => $anh_dai_dien,
-                    ':id' => $id
-                ]
-            );
+    //                                     ";
+    //         $stmt = $this->conn->prepare($sql);
+    //         $stmt->execute(
+    //             [
+    //                 ':anh_dai_dien' => $anh_dai_dien,
+    //                 ':id' => $id
+    //             ]
+    //         );
             
-            // Lấy id sản phẩm vừa thêm
-            return true;
-        }catch(Exception $e){
-            echo "Lỗi: ".$e->getMessage();
-        }
-    }
+    //         // Lấy id sản phẩm vừa thêm
+    //         return true;
+    //     }catch(Exception $e){
+    //         echo "Lỗi: ".$e->getMessage();
+    //     }
+    // }
 
 
     public function checkEmail($email){

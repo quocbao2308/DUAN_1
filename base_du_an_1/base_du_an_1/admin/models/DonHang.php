@@ -15,7 +15,7 @@ class DonHang
    {
       try {
          $sql = 'SELECT  don_hangs.*, trang_thai_don_hangs.trang_thai FROM don_hangs
-         INNER JOIN trang_thai_don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id 
+         INNER JOIN trang_thai_don_hangs on don_hangs.trang_thai_id = trang_thai_don_hangs.id ORDER BY id DESC
         ';
          
          // $sql = 'SELECT * FROM don_hangs.*, ';

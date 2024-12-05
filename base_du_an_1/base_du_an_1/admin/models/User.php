@@ -12,7 +12,7 @@ class User
     public function getAll()
     {
         try {
-            $sql = "SELECT * FROM nguoi_dungs";
+            $sql = "SELECT * FROM nguoi_dungs order by id desc";
             $stmt = $this->conn->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll();
@@ -23,29 +23,29 @@ class User
 
     // Tạo người dùng mới
     public function createUser($ten_nguoi_dung, $email, $mat_khau, $ngay_sinh, $gioi_tinh, $avatar, $trang_thai, $sdt, $dia_chi, $vai_tro = 'user')
-{
-    try {
-        $sql = "INSERT INTO nguoi_dungs (ten_nguoi_dung, email, mat_khau, ngay_sinh, gioi_tinh, avatar, trang_thai, sdt, dia_chi, vai_tro)
+    {
+        try {
+            $sql = "INSERT INTO nguoi_dungs (ten_nguoi_dung, email, mat_khau, ngay_sinh, gioi_tinh, avatar, trang_thai, sdt, dia_chi, vai_tro)
                 VALUES (:ten_nguoi_dung, :email, :mat_khau, :ngay_sinh, :gioi_tinh, :avatar, :trang_thai, :sdt, :dia_chi, :vai_tro)";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':ten_nguoi_dung', $ten_nguoi_dung);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':mat_khau', $mat_khau);
-        $stmt->bindParam(':ngay_sinh', $ngay_sinh);
-        $stmt->bindParam(':gioi_tinh', $gioi_tinh);
-        $stmt->bindParam(':avatar', $avatar);
-        $stmt->bindParam(':trang_thai', $trang_thai);
-        $stmt->bindParam(':sdt', $sdt);
-        $stmt->bindParam(':dia_chi', $dia_chi);
-        $stmt->bindParam(':vai_tro', $vai_tro); // Thêm binding cho vai trò
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo 'Lỗi: ' . $e->getMessage();
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':ten_nguoi_dung', $ten_nguoi_dung);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':mat_khau', $mat_khau);
+            $stmt->bindParam(':ngay_sinh', $ngay_sinh);
+            $stmt->bindParam(':gioi_tinh', $gioi_tinh);
+            $stmt->bindParam(':avatar', $avatar);
+            $stmt->bindParam(':trang_thai', $trang_thai);
+            $stmt->bindParam(':sdt', $sdt);
+            $stmt->bindParam(':dia_chi', $dia_chi);
+            $stmt->bindParam(':vai_tro', $vai_tro); // Thêm binding cho vai trò
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+        }
     }
-}
 
-    
-    
+
+
 
     // Lấy thông tin người dùng theo ID
     public function getUser($id)
@@ -63,27 +63,27 @@ class User
 
     // Cập nhật thông tin người dùng
     public function updateUser($id, $ten_nguoi_dung, $email, $mat_khau, $ngay_sinh, $gioi_tinh, $avatar, $trang_thai, $vai_tro)
-{
-    try {
-        $sql = "UPDATE nguoi_dungs 
+    {
+        try {
+            $sql = "UPDATE nguoi_dungs 
                 SET ten_nguoi_dung = :ten_nguoi_dung, email = :email, mat_khau = :mat_khau, 
                     ngay_sinh = :ngay_sinh, gioi_tinh = :gioi_tinh, avatar = :avatar, trang_thai = :trang_thai, vai_tro = :vai_tro
                 WHERE id = :id";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':id', $id);
-        $stmt->bindParam(':ten_nguoi_dung', $ten_nguoi_dung);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':mat_khau', $mat_khau);
-        $stmt->bindParam(':ngay_sinh', $ngay_sinh);
-        $stmt->bindParam(':gioi_tinh', $gioi_tinh);
-        $stmt->bindParam(':avatar', $avatar);
-        $stmt->bindParam(':trang_thai', $trang_thai);
-        $stmt->bindParam(':vai_tro', $vai_tro); // Thêm binding cho vai trò
-        $stmt->execute();
-    } catch (PDOException $e) {
-        echo 'Lỗi: ' . $e->getMessage();
+            $stmt = $this->conn->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':ten_nguoi_dung', $ten_nguoi_dung);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':mat_khau', $mat_khau);
+            $stmt->bindParam(':ngay_sinh', $ngay_sinh);
+            $stmt->bindParam(':gioi_tinh', $gioi_tinh);
+            $stmt->bindParam(':avatar', $avatar);
+            $stmt->bindParam(':trang_thai', $trang_thai);
+            $stmt->bindParam(':vai_tro', $vai_tro); // Thêm binding cho vai trò
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo 'Lỗi: ' . $e->getMessage();
+        }
     }
-}
 
 
     // Xóa người dùng
@@ -98,5 +98,37 @@ class User
             echo 'Lỗi: ' . $e->getMessage();
         }
     }
+
+    public function checkLogin($email,$mat_khau){
+        try{
+            $sql = " SELECT * FROM tai_khoans WHERE email=:email";
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute(
+                [
+                    ':email' => $email,
+                ]
+            );
+            $user= $stmt->fetch();
+
+            if($user && password_verify($mat_khau,$user['mat_khau'])){
+                if($user['vai_tro']== 2){ //ADMIN
+                   if( $user['trang_thai']== 1){
+                        return $user['email']; // thanh cong
+                   }else {
+                        return "Tài khoản bị cấm";
+                   }
+                }
+            }elseif($user && $mat_khau==$user['mat_khau']){
+                if($user['vai_tro']==1){ // KHACH HANG
+                    return "Tài khoản không có quyền đăng nhập admin";
+                }
+            }else{
+                return 'Vui lòng kiểm tra lại thông tin đăng nhập';
+            }
+    
+        }catch(Exception $e){
+            echo "Lỗi: ".$e->getMessage();
+            return  false;
+        }
+    }
 }
-?>

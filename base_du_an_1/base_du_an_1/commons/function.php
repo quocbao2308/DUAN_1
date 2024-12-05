@@ -87,15 +87,6 @@ function deleteSessionError()
             unset($_SESSION['tong']);
             unset($_SESSION['layMk']);
             unset( $_SESSION['dat_hang_thanh_cong']);
-    
-    
-    
-    
-    
-    
-    
-         //   session_unset();
-          //  session_destroy();
         }
     }
 

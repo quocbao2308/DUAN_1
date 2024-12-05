@@ -128,16 +128,16 @@ class GioHangDonHangController
 
             $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
             $tai_khoan_id = $user['id'];
-            
+
             $gioHang = $this->modelGioHang->getGioHangFromUser($user['id']);
             $chiTietGioHang = $this->modelGioHang->getDetailGioHang($gioHang['id']);
             // var_dump($chiTietGioHang);die();
-            
-            
-            $donHangId = $this->modelDonHang->addDonHang($tai_khoan_id, $ten_nguoi_nhan, $email_nguoi_nhan, $sdt_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $tong_tien, $phuong_thuc_thanh_toan_id, $ngay_dat, $ma_don_hang,$trang_thai_id );
+
+
+            $donHangId = $this->modelDonHang->addDonHang($tai_khoan_id, $ten_nguoi_nhan, $email_nguoi_nhan, $sdt_nguoi_nhan, $dia_chi_nguoi_nhan, $ghi_chu, $tong_tien, $phuong_thuc_thanh_toan_id, $ngay_dat, $ma_don_hang, $trang_thai_id);
             // var_dump($donHangId);die();
-           
-           
+
+
             $donHang = ['id' => $donHangId];
             // var_dump($donHang);die;
             $tong_tien = 0;
@@ -187,6 +187,52 @@ class GioHangDonHangController
             $xoa = $this->modelGioHang->deleteSanPhamGioHang($chi_tiet_gio_hang_id);
             // var_dump($xoa);die()
             header('Location:' . BASE_URL . '?act=gio-hang');
+        }
+    }
+
+    public function lichSuMuaHang()
+    {
+        if (isset($_SESSION['user_client'])) {
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $tai_khoan_id = $user['id'];
+
+            $trangThaiDonHangs = $this->modelDonHang->getTrangThai();
+            $trangThais =array_column($trangThaiDonHangs , 'trang_thai', 'id');
+
+
+            $phuongThucThanhToans = $this->modelDonHang->getPhuongThucThanhToan();
+            $phuongThucs = array_column($phuongThucThanhToans, 'ten_phuong_thuc' , 'id');
+
+            $donHangs = $this->modelDonHang->getDonHangFromUser($tai_khoan_id);
+            require_once './views/lichSuMuaHang.php';
+        }
+    }
+
+
+    public function chiTietMuaHang() {}
+    public function huyMuaHang() {
+        if (isset($_SESSION['user_client'])) {
+            $user = $this->modelTaiKhoan->getTaiKhoanFromEmail($_SESSION['user_client']);
+            $tai_khoan_id = $user['id'];
+
+            $donHangId =$_GET['id'];
+
+            $donHang =$this->modelDonHang->getDonHangById($donHangId);
+
+            if($donHang['tai_khoan_id'] != $tai_khoan_id){
+                echo "Bạn không có quyền hủy đơn hàng này";
+            }
+            if($donHang['trang_thai_id'] != 1){
+                echo "Chỉ đơn hàng ở trạng thái chưa xác nhận mới có thể hủy";
+            }
+
+            $this->modelDonHang->updateTrangThaiDonHang($donHangId, 11);
+            header("location:" . BASE_URL.'?act=lich-su-mua-hang');
+            exit;
+
+        }else{
+            var_dump("Đăng nhập thì mới hủy được chứ");
+            exit;
         }
     }
 }

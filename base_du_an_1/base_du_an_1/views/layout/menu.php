@@ -35,10 +35,10 @@
                                             <ul class="dropdown">
                                                 <?php
                                                 $listDanhMuc = ListDM();
-                                                foreach($listDanhMuc as $Dm):   ?>
-                                                 <li><a href="?act=dm&id=<?= $Dm['id'] ?>"><?= $Dm['ten_danh_muc'] ?></a></li>
+                                                foreach ($listDanhMuc as $Dm):   ?>
+                                                    <li><a href="?act=dm&id=<?= $Dm['id'] ?>"><?= $Dm['ten_danh_muc'] ?></a></li>
                                                 <?php endforeach  ?>
-                                                
+
                                             </ul>
                                         </li>
                                         <li><a href="contact-us.html">Giới thiệu</a></li>
@@ -66,29 +66,32 @@
                             </div>
                             <div class="header-configure-area">
                                 <ul class="nav justify-content-end">
-                                    
+
                                     <li class="user-hover">
                                         <a href="#">
                                             <i class="pe-7s-user"></i>
                                         </a>
                                         <ul class="dropdown-list">
-                                            <?php if(isset($_SESSION['user_client'])){ ?>
+                                            <?php if (isset($_SESSION['user_client'])) { ?>
                                                 <li><a href="my-account.html">Tài khoản</a></li>
                                                 <li><a href="?act=logout">Đăng xuất</a></li>
+                                                <li><a href="?act=lich-su-mua-hang">Đơn hàng</a></li>
 
-                                            <?php }else{ ?>
-                                                 <li><a href="<?= BASE_URL . '?act=form-login' ?>">Đăng nhập</a></li>
-                                            <li><a href="login-register.html">ĐĂng ký</a></li>
+                                            <?php } else { ?>
+                                                <li><a href="<?= BASE_URL .'?act=form-login' ?>">Đăng nhập</a></li>
+                                                <li><a href="<?= BASE_URL .'?act=form-dang-ky' ?>">ĐĂng ký</a></li>
                                             <?php } ?>
-                                                
-                                            
+
+
                                         </ul>
                                     </li>
-                                    
+
                                     <li>
-                                        <a href="#" class="minicart-btn">
+                                        <a href="<?= BASE_URL .'?act=gio-hang' ?>" class="minicart-btn">
                                             <i class="pe-7s-shopbag"></i>
+
                                             <div class="notification">2</div>
+
                                         </a>
                                     </li>
                                 </ul>

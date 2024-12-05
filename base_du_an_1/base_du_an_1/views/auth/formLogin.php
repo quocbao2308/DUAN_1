@@ -34,6 +34,7 @@
                             <h5>Đăng nhập</h5>
                             <?php if (isset($_SESSION['error'])) { ?>
                                 <p class="text-danger login-box-msg text-center"><?= $_SESSION['error'] ?></p>
+                                
                             <?php } else { ?>
                                 <p>Vui lòng đăng nhập</p>
                             <?php } ?>
